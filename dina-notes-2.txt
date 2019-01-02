@@ -1,0 +1,86 @@
+>docker tag mcr.microsoft.com/azure-cognitive-services/language:latest diberrycontainerregistry001.azurecr.io/language:latest
+
+docker push diberrycontainerregistry001.azurecr.io/language:latest
+
+
+>az aks create --resource-group diberry-rg-container --name diberryAKSCluster --node-count 3  --service-principal 55962827-4bd0-41c3-aa91-d8cc383a1025  --client-secret ba839221-f513-4e86-b952-5a8fcdb9610c  --generate-ssh-keys
+
+> az aks get-credentials --resource-group diberry-rg-container --name diberryAKSCluster
+
+Merged "diberryAKSCluster" as current context in C:\Users\diberry\.kube\config
+
+> kubectl get nodes
+
+NAME                       STATUS    ROLES     AGE       VERSION
+aks-nodepool1-10707104-0   Ready     agent     7m        v1.9.11
+aks-nodepool1-10707104-1   Ready     agent     7m        v1.9.11
+aks-nodepool1-10707104-2   Ready     agent     8m        v1.9.11
+
+> kubectl apply -f dina-ta-language-aks.yml
+service "language" created
+deployment.apps "language" created
+
+
+
+>kubectl get service language --watch
+
+> kubectl apply -f dina-ta-language-aks.yml
+service "language" unchanged
+deployment.apps "language" configured
+
+
+
+> az aks list
+[
+  {
+    "aadProfile": null,
+    "addonProfiles": null,
+    "agentPoolProfiles": [
+      {
+        "count": 3,
+        "maxPods": 110,
+        "name": "nodepool1",
+        "osDiskSizeGb": 30,
+        "osType": "Linux",
+        "storageProfile": "ManagedDisks",
+        "vmSize": "Standard_DS1_v2"
+      }
+    ],
+    "dnsPrefix": "diberryAKS-diberry-rg-conta-65a101",
+    "enableRbac": true,
+    "fqdn": "diberryaks-diberry-rg-conta-65a101-83d44847.hcp.westus.azmk8s.io",
+    "id": "/subscriptions/65a1016d-0f67-45d2-b838-b8f373d6d52e/resourcegroups/diberry-rg-container/providers/Microsoft.ContainerService/managedClusters/diberryAKSCluster",
+    "kubernetesVersion": "1.9.11",
+    "linuxProfile": {
+      "adminUsername": "azureuser",
+      "ssh": {
+        "publicKeys": [
+          {
+            "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCyXd/YyBKx50GNV5WKxqehxR7qrihRjITjKyAvMqOT5IPxlPssJdVQAFgdYOaJnavJke1BbgR1lXZ49pgDSMeasdIWIQa6qW/15sG/G1/1pHBR0krzQTQtvDfLlablgGUbKVYOlVGtEq2jRsmKsNJWLxvohR2d81mFC+LSUTh5qT9cjJZhkFEuXY5DVljTI0BNYKqrfMkV0QW7Yne2MEkgLCm/SJfZjFy5mDDPZrPayDt2MkhdMPmFJsid5bFT4zT02j5wIAmDDcW1pCiNOm8CgduzulUnn57QAc+NoFjOY8cWrDfsk9ibzqkFE5vjy1BrdKVfRsQfbtGfXnSOKptb"
+          }
+        ]
+      }
+    },
+    "location": "westus",
+    "name": "diberryAKSCluster",
+    "networkProfile": {
+      "dnsServiceIp": "10.0.0.10",
+      "dockerBridgeCidr": "172.17.0.1/16",
+      "networkPlugin": "kubenet",
+      "networkPolicy": null,
+      "podCidr": "10.244.0.0/16",
+      "serviceCidr": "10.0.0.0/16"
+    },
+    "nodeResourceGroup": "MC_diberry-rg-container_diberryAKSCluster_westus",
+    "provisioningState": "Succeeded",
+    "resourceGroup": "diberry-rg-container",
+    "servicePrincipalProfile": {
+      "clientId": "55962827-4bd0-41c3-aa91-d8cc383a1025"
+    },
+    "type": "Microsoft.ContainerService/ManagedClusters"
+  }
+]
+
+
+
+>az aks delete --name diberryAKSCluster --resource-group diberry-rg-container --no-wait --subscription 65a1016d-0f67-45d2-b838-b8f373d6d52e --yes

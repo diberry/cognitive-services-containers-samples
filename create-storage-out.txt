@@ -1,0 +1,2 @@
+Storage account name: diberry3657
+Storage account key:

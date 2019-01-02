@@ -5,7 +5,7 @@ A sample web API app using the Language SDK, [Text Analytics](https://docs.micro
 In order for your Kubernetes pods to pull from the container registry, you'll need a Kubernetes secret with the registry credentials. Run this script to get help creating that secret from credentials stored in an Azure KeyVault.
 
 ## language.yml
-Using `kubectl apply -f language.yml`, you can deploy this frontend and container as a Kubernetess app to your cluster.
+Using `kubectl apply -f language-understanding.yml`, you can deploy this frontend and container as a Kubernetes app to your cluster.
 
 ## Resources
 
